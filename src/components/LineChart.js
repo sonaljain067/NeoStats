@@ -137,9 +137,19 @@ export function LineChart({ neodata }) {
           }
         ]
       }
-    
       return (
         <div className='container-fluid'>
+          <div className='row'>
+            {fastestAsteroidList && fastestAsteroidList.length > 0 && (
+            <h5>Fastest Asteroid in km/h: {Math.max(...fastestAsteroidList.map(Number))}</h5>)
+            }
+            {closestAsteroidList && closestAsteroidList.length > 0 && (
+              <h5>Closest Asteroid: {Math.max(...closestAsteroidList.map(Number))}</h5>
+            )}
+            {averageSizeList && averageSizeList.length > 0 && (
+              <h5>Average Size of the Asteroids in kilometers: {Math.max(...averageSizeList.map(Number))}</h5>
+            )}
+          </div>
           <div className='row'>
             <LineChartComponent options={options} data={data} />
             <LineChartComponent options={options} data={fastestData} />

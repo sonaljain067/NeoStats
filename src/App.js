@@ -1,10 +1,11 @@
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { useEffect, useState } from 'react';
-import { LineChart } from './components/LineChart';
+// import { LineChart } from './components/LineChart';
 
 import React from 'react';
 import './App.css';
+import LineChart from './components/LineChart';
 
 function App() {
   const [data, setData] = useState([]);
@@ -73,7 +74,7 @@ function App() {
         </div>
       
       </div>
-      <h5>Note: Select Starting and Ending dates(only 7 days interval)</h5>
+      <h6>Note: Select Starting and Ending dates(upto 7 days interval)</h6>
       <LineChart neodata={data} />
       
     </div>
