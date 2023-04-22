@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -22,29 +22,33 @@ ChartJS.register(
 );
 
 export function LineChart({ neodata }) {
-    var fastestAsteroidList = [], closestAsteroidList = [], averageSizeList = [];
-    var fastestAsteroid = null, closestAsteroid = null, totalSize = 0, totalAsteroids = 0; 
+  const [fastestAsteroidList, setFastestAsteroidList] = useState([]);
+  const [closestAsteroidList, setClosestAsteroidList] = useState([]);
+  const [averageSizeAsteroidList, setAverageSizeAsteroidList] = useState([]);
 
     const getFastestAsteroid = () => {
       if(!neodata) return null;
-      
+      let fastestAsteroid = null; 
       for (const d in neodata){
         const asteroids = neodata[d]
         asteroids.forEach(asteroid => {
           if(!fastestAsteroid || asteroid.close_approach_data[0].relative_velocity.kilometers_per_hour > fastestAsteroid.close_approach_data[0].relative_velocity.kilometers_per_hour)
             fastestAsteroid = asteroid;
         });
+
         if(fastestAsteroid){
           fastestAsteroidList.push(fastestAsteroid.close_approach_data[0].relative_velocity.kilometers_per_hour);
           fastestAsteroid = null;
         }
       }
+      setFastestAsteroidList(fastestAsteroidList);
     }
     const getClosestAsteroid = () => {
       if(!neodata) return null;
-
+      let closestAsteroid = null; 
       for (const d in neodata){
         const asteroids = neodata[d];
+
         asteroids.forEach(asteroid => {
           if(!closestAsteroid || asteroid.close_approach_data[0].miss_distance.kilometers < closestAsteroid.close_approach_data[0].miss_distance.kilometers)
             closestAsteroid = asteroid;
@@ -54,10 +58,11 @@ export function LineChart({ neodata }) {
           closestAsteroid = null;
         }
       }
+      setClosestAsteroidList(closestAsteroidList)
     }
     const getAverageSize = () => {
       if(!neodata) return null; 
-      
+      let totalSize = 0, totalAsteroids = 0;
       for(const d in neodata){
         const asteroids = neodata[d];
         asteroids.forEach(asteroid => {
@@ -65,11 +70,12 @@ export function LineChart({ neodata }) {
           totalAsteroids++;
         })
         if(totalSize){
-          averageSizeList.push(totalSize / totalAsteroids);
+          averageSizeAsteroidList.push(totalSize / totalAsteroids);
           totalSize = 0
           totalAsteroids = 0;
         }
       }
+      setAverageSizeAsteroidList(averageSizeAsteroidList)
     }
     const options = {
         responsive: true,
@@ -81,7 +87,12 @@ export function LineChart({ neodata }) {
           },
         },
     };
-    
+    useEffect(() => {
+        getFastestAsteroid();
+        getClosestAsteroid();
+        getAverageSize();
+      
+    }, [neodata])
     if(neodata){
       var labels = Object.keys(neodata);
       var theData = []
@@ -89,10 +100,6 @@ export function LineChart({ neodata }) {
         theData.push(neodata[key]?.length ?? 0)
       }, {})
 
-      getFastestAsteroid()
-      getClosestAsteroid()
-      getAverageSize()
-      
       const data = {
         labels,
         datasets: [
@@ -131,12 +138,13 @@ export function LineChart({ neodata }) {
         datasets: [
           {
             label: 'Average Size of Asteroid',
-            data: averageSizeList,
+            data: averageSizeAsteroidList,
             borderColor: 'rgb(53, 162, 235)',
             backgroundColor: 'rgba(53, 162, 235, 0.5)',
           }
         ]
       }
+      
       return (
         <div className='container-fluid'>
           <div className='row'>
@@ -146,8 +154,8 @@ export function LineChart({ neodata }) {
             {closestAsteroidList && closestAsteroidList.length > 0 && (
               <h5>Closest Asteroid: {Math.max(...closestAsteroidList.map(Number))}</h5>
             )}
-            {averageSizeList && averageSizeList.length > 0 && (
-              <h5>Average Size of the Asteroids in kilometers: {Math.max(...averageSizeList.map(Number))}</h5>
+            {averageSizeAsteroidList && averageSizeAsteroidList.length > 0 && (
+              <h5>Average Size of the Asteroids in kilometers: {Math.max(...averageSizeAsteroidList.map(Number))}</h5>
             )}
           </div>
           <div className='row'>

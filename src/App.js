@@ -51,7 +51,7 @@ function App() {
     <div className="App">
       <h1 className='m-4'>NeoStats</h1>
       <div className='container'>
-        <div className='m-4'>
+        <div className='m-3'>
           <button onClick={toggleSD} type="button/text" className='btn btn-primary m-3'>
           {isSDOpen ? 'Close calender' : 'Select Starting Date'}
           </button>
@@ -59,12 +59,14 @@ function App() {
             {isEDOpen ? 'Close calender' : 'Select Ending Date'}
         </button>
         </div>
-        <div className='row m-3'>
-          <div className='col-lg-6'>{startingdate ? <h5>Starting Date: {startingDate}</h5> : ''}</div>
-          <div className='col-lg-6'>{endingdate ? <h5>Ending Date: {endingDate}</h5> : ''}</div>
+        <div className='row m-2'>
+          <div className='col-lg-3'></div>
+          <div className='col-lg-3'>{startingdate ? <h5>Starting Date: {startingDate}</h5> : ''}</div>
+          <div className='col-lg-3'>{endingdate ? <h5>Ending Date: {endingDate}</h5> : ''}</div>
+          <div className='col-lg-3'></div>
         </div>
-        <div className='m-5'>
-        {(startingdate && endingdate) ? <button onClick={handleSubmit} type="button" class="btn btn-primary">Submit</button> : <button onClick={handleSubmit} type="button" class="btn btn-secondary">Submit</button>}
+        <div className='m-4'>
+          <button onClick={handleSubmit} type="button" class="btn btn-primary">Submit</button>
         </div>
 
         <div className='row d-flex justify-content-center align-items-center'>
@@ -75,6 +77,7 @@ function App() {
       
       </div>
       <h6>Note: Select Starting and Ending dates(upto 7 days interval)</h6>
+      <p>[Single click on submit button for 1st chart while double click for all charts]</p>
       <LineChart neodata={data} />
       
     </div>
