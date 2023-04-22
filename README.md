@@ -30,9 +30,13 @@ It's a web application that displays data and line chart about Near-Earth Object
 The components of NeoStats looks like:
 ##### Before API call:
 ![image](https://user-images.githubusercontent.com/52230497/233769022-b795149b-e23e-46f3-b389-640f713c6006.png)
+![image](https://user-images.githubusercontent.com/52230497/233773266-f8a9f6f3-7c96-4ac6-b6e7-ac7a8228b47c.png)
+
 
 ##### After API call:
-![image](https://user-images.githubusercontent.com/52230497/233769079-477b87b7-03c9-4104-a621-dcb20141e39b.png)
-![image](https://user-images.githubusercontent.com/52230497/233769128-590a5065-9a6a-4941-a536-58e57c314100.png)
+![image](https://user-images.githubusercontent.com/52230497/233773235-222bc8b5-6883-4bfd-ba90-d30d8b7b1da0.png)
+![image](https://user-images.githubusercontent.com/52230497/233773302-69fc8d5b-2745-404d-805c-17ae8b2f69b4.png)
+
+
 
 ### [Live Demo](https://neostats.netlify.app/)
